@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Login Manager</title>
+    <style>
+        :root {
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; padding: 50px; }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; width: 100%; max-width: 800px; }
+        .card { background: var(--card-bg); padding: 20px; border-radius: 15px; text-align: center; text-decoration: none; color: inherit; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s; }
+        .card:hover { transform: translateY(-5px); }
+        .card img { width: 50px; height: 50px; margin-bottom: 10px; }
+        h1 { margin-bottom: 40px; }
+    </style>
+</head>
+<body>
+
+    <h1>🔐 Quick Login Management</h1>
+
+    <div class="grid">
+        <a href="https://myaccount.google.com/device-activity" target="_blank" class="card">
+            <img src="https://www.google.com/favicon.ico" alt="Google">
+            <div>구글 로그인 관리</div>
+        </a>
+
+        <a href="https://nid.naver.com/user2/help/myInfo.nhn?m=viewSecurity" target="_blank" class="card">
+            <img src="https://www.naver.com/favicon.ico" alt="Naver">
+            <div>네이버 보안 설정</div>
+        </a>
+
+        <a href="https://accounts.kakao.com/weblogin/account/info" target="_blank" class="card">
+            <img src="https://k.kakaocdn.net/14/dn/btqCn0WEmI3/JjXID1nodeW4UMST3vWSUK/o.jpg" alt="Kakao" style="border-radius: 50%;">
+            <div>카카오 계정 관리</div>
+        </a>
+
+        <a href="https://github.com/settings/sessions" target="_blank" class="card">
+            <img src="https://github.com/favicon.ico" alt="GitHub">
+            <div>깃허브 세션 관리</div>
+        </a>
+    </div>
+
+</body>
+</html>
