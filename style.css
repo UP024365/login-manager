@@ -1,4 +1,4 @@
-    :root {
+:root {
     --bg: #f8f9fa;
     --card-bg: #ffffff;
     --text: #212529;
@@ -83,7 +83,6 @@ body {
     width: 100%;
 }
 
-/* 이모지 아이콘 스타일 */
 .emoji-icon {
     font-size: 24px;
     margin-right: 15px;
