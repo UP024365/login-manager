@@ -1,49 +1,123 @@
 <!DOCTYPE html>
 <html lang="ko">
 <head>
-    <link rel="manifest" href="manifest.json">
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>My Login Manager</title>
+    <title>SafeLogin Dashboard</title>
+    <link rel="manifest" href="manifest.json">
     <style>
         :root {
-            --bg-color: #f4f7f6;
-            --card-bg: #ffffff;
-            --text-color: #333;
+            --bg: #f8f9fa; --card-bg: #ffffff; --text: #212529; --border: #dee2e6; --accent: #4dabf7;
         }
-        body { font-family: 'Pretendard', sans-serif; background-color: var(--bg-color); color: var(--text-color); display: flex; flex-direction: column; align-items: center; padding: 50px; }
-        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 20px; width: 100%; max-width: 800px; }
-        .card { background: var(--card-bg); padding: 20px; border-radius: 15px; text-align: center; text-decoration: none; color: inherit; box-shadow: 0 4px 6px rgba(0,0,0,0.1); transition: transform 0.2s; }
-        .card:hover { transform: translateY(-5px); }
-        .card img { width: 50px; height: 50px; margin-bottom: 10px; }
-        h1 { margin-bottom: 40px; }
+        [data-theme="dark"] {
+            --bg: #1a1b1e; --card-bg: #2c2e33; --text: #ced4da; --border: #373a40; --accent: #74c0fc;
+        }
+        body { font-family: 'Pretendard', sans-serif; background: var(--bg); color: var(--text); transition: 0.3s; margin: 0; display: flex; flex-direction: column; align-items: center; padding: 20px; }
+        
+        .header { width: 100%; max-width: 600px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px; }
+        
+        #list-container { width: 100%; max-width: 600px; list-style: none; padding: 0; }
+        
+        .item { 
+            background: var(--card-bg); border: 1px solid var(--border); margin-bottom: 10px; 
+            padding: 12px 15px; border-radius: 12px; display: flex; align-items: center; 
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05); transition: 0.2s;
+        }
+        .item:hover { border-color: var(--accent); transform: scale(1.01); }
+        
+        .icon { width: 24px; height: 24px; margin-right: 15px; object-fit: contain; flex-shrink: 0; }
+        .info { flex-grow: 1; text-decoration: none; color: inherit; font-weight: 500; font-size: 15px; }
+        
+        .controls { display: flex; gap: 5px; }
+        button { cursor: pointer; border: 1px solid var(--border); background: var(--card-bg); color: var(--text); padding: 5px 8px; border-radius: 5px; font-size: 11px; }
+        button:hover { background: var(--accent); color: white; border-color: var(--accent); }
+        
+        .theme-toggle { padding: 10px 20px; font-weight: bold; border-radius: 20px; border: 2px solid var(--accent); }
     </style>
 </head>
 <body>
 
-    <h1>🔐 Quick Login Management</h1>
+<div class="header">
+    <h2>🔐 Security Dashboard</h2>
+    <button class="theme-toggle" onclick="toggleTheme()">🌓 Theme</button>
+</div>
 
-    <div class="grid">
-        <a href="https://myaccount.google.com/device-activity" target="_blank" class="card">
-            <img src="https://www.google.com/favicon.ico" alt="Google">
-            <div>구글 로그인 관리</div>
-        </a>
+<ul id="list-container">
+    </ul>
 
-        <a href="https://nid.naver.com/user2/help/myInfo.nhn?m=viewSecurity" target="_blank" class="card">
-            <img src="https://www.naver.com/favicon.ico" alt="Naver">
-            <div>네이버 보안 설정</div>
-        </a>
+<script>
+    // 모든 사이트 데이터 통합 리스트
+    let sites = [
+        { name: "구글 로그인 기기 관리", url: "https://myaccount.google.com/device-activity", icon: "https://www.google.com/favicon.ico" },
+        { name: "네이버 보안 설정", url: "https://nid.naver.com/user2/help/myInfo.nhn?m=viewSecurity", icon: "https://www.naver.com/favicon.ico" },
+        { name: "카카오 계정 관리", url: "https://accounts.kakao.com/weblogin/account/info", icon: "https://www.kakao.com/favicon.ico" },
+        { name: "깃허브 세션 관리", url: "https://github.com/settings/sessions", icon: "https://github.com/favicon.ico" },
+        { name: "인스타 로그인 활동", url: "https://www.instagram.com/session/login_activity/", icon: "https://www.instagram.com/favicon.ico" },
+        { name: "페이스북 보안 설정", url: "https://www.facebook.com/settings?tab=security", icon: "https://www.facebook.com/favicon.ico" },
+        { name: "MS 최근 활동 확인", url: "https://account.live.com/Activity", icon: "https://www.microsoft.com/favicon.ico" },
+        { name: "X(트위터) 세션 관리", url: "https://x.com/settings/sessions", icon: "https://abs.twimg.com/favicons/twitter.2.ico" },
+        { name: "스팀 기기 관리", url: "https://store.steampowered.com/twofactor/manage", icon: "https://store.steampowered.com/favicon.ico" },
+        { name: "에픽게임즈 보안 설정", url: "https://www.epicgames.com/account/password", icon: "https://www.epicgames.com/static/favicon.ico" },
+        { name: "넥슨 보안센터", url: "https://member.nexon.com/myinfo/securitycenter.aspx", icon: "https://www.nexon.com/favicon.ico" },
+        { name: "스토브 보안관리", url: "https://member.onstove.com/member/security", icon: "https://www.onstove.com/favicon.ico" },
+        { name: "Adobe 보안 설정", url: "https://account.adobe.com/security", icon: "https://www.adobe.com/favicon.ico" },
+        { name: "트위치 보안 설정", url: "https://www.twitch.tv/settings/security", icon: "https://static.twitchcdn.net/assets/favicon-32-32.png" }
+    ];
 
-        <a href="https://accounts.kakao.com/weblogin/account/info" target="_blank" class="card">
-            <img src="https://k.kakaocdn.net/14/dn/btqCn0WEmI3/JjXID1nodeW4UMST3vWSUK/o.jpg" alt="Kakao" style="border-radius: 50%;">
-            <div>카카오 계정 관리</div>
-        </a>
+    const container = document.getElementById('list-container');
 
-        <a href="https://github.com/settings/sessions" target="_blank" class="card">
-            <img src="https://github.com/favicon.ico" alt="GitHub">
-            <div>깃허브 세션 관리</div>
-        </a>
-    </div>
+    // 렌더링 함수
+    function render() {
+        container.innerHTML = '';
+        sites.forEach((site, index) => {
+            const li = document.createElement('li');
+            li.className = 'item';
+            li.innerHTML = `
+                <img src="${site.icon}" class="icon" onerror="this.src='https://cdn-icons-png.flaticon.com/512/3064/3064155.png'">
+                <a href="${site.url}" target="_blank" class="info">${site.name}</a>
+                <div class="controls">
+                    <button onclick="move(${index}, -1)">▲</button>
+                    <button onclick="move(${index}, 1)">▼</button>
+                </div>
+            `;
+            container.appendChild(li);
+        });
+        // 현재 순서 저장
+        localStorage.setItem('mySiteOrder_v2', JSON.stringify(sites));
+    }
+
+    // 순서 변경 함수
+    function move(index, step) {
+        const newIndex = index + step;
+        if (newIndex < 0 || newIndex >= sites.length) return;
+        const temp = sites[index];
+        sites[index] = sites[newIndex];
+        sites[newIndex] = temp;
+        render();
+    }
+
+    // 다크모드 토글
+    function toggleTheme() {
+        const current = document.documentElement.getAttribute('data-theme');
+        const next = current === 'dark' ? 'light' : 'dark';
+        document.documentElement.setAttribute('data-theme', next);
+        localStorage.setItem('theme', next);
+    }
+
+    // 초기 로드
+    window.onload = () => {
+        const savedOrder = localStorage.getItem('mySiteOrder_v2');
+        if (savedOrder) {
+            // 저장된 순서 불러오기 (새 사이트가 추가되었을 경우를 대비해 기존 데이터와 병합 로직을 넣을 수 있지만 일단 불러오기 위주)
+            sites = JSON.parse(savedOrder);
+        }
+        
+        const savedTheme = localStorage.getItem('theme');
+        if (savedTheme) document.documentElement.setAttribute('data-theme', savedTheme);
+        
+        render();
+    };
+</script>
 
 </body>
 </html>
