@@ -29,7 +29,7 @@ function goHome() {
     document.getElementById('home-screen').style.display = 'grid';
     document.getElementById('list-screen').style.display = 'none';
     document.getElementById('back-btn').style.display = 'none';
-    document.getElementById('title').innerText = '🚀 My Uni-Hub';
+    document.getElementById('title').innerText = '🔗 Node';
 }
 
 function render(cat) {
