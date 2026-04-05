@@ -4,7 +4,8 @@ const sitesData = {
         { name: "교통대 통합로그인(포털)", url: "https://sso.ut.ac.kr/svc/tk/Auth.eps?ac=Y&ifa=N&id=portal&", icon: "🔑" },
         { name: "OCU 컨소시엄 로그인", url: "https://cons.ocu.ac.kr/home/mainHome/Form/main", icon: "🌐" },
         { name: "e-Campus (LMS)", url: "https://ecampus.ut.ac.kr/main/MainView.dunet#main", icon: "💻" },
-        { name: "한국교통대 홈페이지", url: "https://www.ut.ac.kr", icon: "🏫" }
+        { name: "한국교통대 홈페이지", url: "https://www.ut.ac.kr", icon: "🏫" },
+        { name: "ChatGPT (AI 보조)", url: "https://chat.openai.com", icon: "🤖" }
     ],
     login: [
         { name: "구글 로그인 관리", url: "https://myaccount.google.com/device-activity", icon: "🔍" },
