@@ -1,0 +1,180 @@
+/* 1. 기본 테마 변수 설정 */
+:root {
+    --bg: #f8f9fa;
+    --card-bg: #ffffff;
+    --text: #212529;
+    --border: #dee2e6;
+    --accent: #4dabf7;
+    --card-shadow: rgba(0, 0, 0, 0.05);
+}
+
+/* 2. 다크모드 설정 */
+[data-theme="dark"] {
+    --bg: #1a1b1e;
+    --card-bg: #2c2e33;
+    --text: #ced4da;
+    --border: #373a40;
+    --accent: #74c0fc;
+    --card-shadow: rgba(0, 0, 0, 0.3);
+}
+
+/* 3. 기본 레이아웃 */
+body {
+    font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    transition: background 0.3s, color 0.3s;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    margin: 0;
+    min-height: 100vh;
+}
+
+/* 4. 헤더 영역 */
+.header {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.header-left {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+}
+
+h1 {
+    font-size: 1.5rem;
+    margin: 0;
+}
+
+/* 5. 메인 홈 메뉴 (카드형) */
+.main-menu {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    width: 100%;
+    max-width: 600px;
+    margin-top: 50px;
+}
+
+.menu-card {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    padding: 50px 20px;
+    border-radius: 20px;
+    text-align: center;
+    cursor: pointer;
+    transition: transform 0.3s, border-color 0.3s;
+    box-shadow: 0 4px 15px var(--card-shadow);
+}
+
+.menu-card:hover {
+    transform: translateY(-5px);
+    border-color: var(--accent);
+}
+
+.menu-icon {
+    font-size: 50px;
+    display: block;
+    margin-bottom: 15px;
+}
+
+/* 6. 상세 리스트 스타일 */
+#list-screen {
+    width: 100%;
+    max-width: 600px;
+}
+
+#list-container {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.item {
+    background: var(--card-bg);
+    border: 1px solid var(--border);
+    margin-bottom: 12px;
+    border-radius: 12px;
+    overflow: hidden;
+    transition: 0.2s;
+    box-shadow: 0 2px 4px var(--card-shadow);
+}
+
+.item:hover {
+    border-color: var(--accent);
+    transform: scale(1.01);
+}
+
+/* 항목 전체 클릭 가능 영역 */
+.item a {
+    display: flex;
+    align-items: center;
+    padding: 18px;
+    text-decoration: none;
+    color: inherit;
+    width: 100%;
+    box-sizing: border-box;
+}
+
+/* 7. 아이콘 스타일 (icons 폴더용 최적화) */
+.icon {
+    width: 32px;
+    height: 32px;
+    margin-right: 15px;
+    object-fit: contain; /* 비율 유지 */
+    flex-shrink: 0;      /* 찌그러짐 방지 */
+}
+
+.info {
+    font-weight: 500;
+    font-size: 1.05rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 8. 버튼 디자인 */
+.back-btn {
+    background: var(--accent);
+    color: white;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: opacity 0.2s;
+}
+
+.back-btn:hover {
+    opacity: 0.8;
+}
+
+.theme-toggle {
+    padding: 8px 15px;
+    border-radius: 20px;
+    border: 1px solid var(--accent);
+    background: transparent;
+    color: var(--text);
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 0.85rem;
+}
+
+/* 9. 반응형 (모바일 1열 배치) */
+@media (max-width: 480px) {
+    .main-menu {
+        grid-template-columns: 1fr;
+        padding: 0 10px;
+    }
+    
+    .menu-card {
+        padding: 40px 20px;
+    }
+}

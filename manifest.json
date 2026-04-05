@@ -1,10 +1,10 @@
 {
-  "name": "Login Manager App",
-  "short_name": "LoginMgr",
-  "start_url": "index.html",
+  "name": "My Uni-Hub",
+  "short_name": "UniHub",
+  "start_url": "./index.html",
   "display": "standalone",
-  "background_color": "#ffffff",
-  "theme_color": "#4285f4",
+  "background_color": "#f8f9fa",
+  "theme_color": "#4dabf7",
   "icons": [
     {
       "src": "https://cdn-icons-png.flaticon.com/512/3064/3064155.png",
