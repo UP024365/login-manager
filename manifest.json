@@ -1,0 +1,15 @@
+{
+  "name": "Login Manager App",
+  "short_name": "LoginMgr",
+  "start_url": "index.html",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#4285f4",
+  "icons": [
+    {
+      "src": "https://cdn-icons-png.flaticon.com/512/3064/3064155.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
