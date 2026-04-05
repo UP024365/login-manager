@@ -15,7 +15,22 @@ const sitesData = {
     ]
 };
 
-// ... (openCategory, goHome 함수는 동일)
+function openCategory(cat) {
+    localStorage.setItem('lastCategory', cat);
+    document.getElementById('home-screen').style.display = 'none';
+    document.getElementById('list-screen').style.display = 'block';
+    document.getElementById('back-btn').style.display = 'block';
+    document.getElementById('title').innerText = cat === 'study' ? '📚 Study' : '🔐 Login Manager';
+    render(cat);
+}
+
+function goHome() {
+    localStorage.removeItem('lastCategory');
+    document.getElementById('home-screen').style.display = 'grid';
+    document.getElementById('list-screen').style.display = 'none';
+    document.getElementById('back-btn').style.display = 'none';
+    document.getElementById('title').innerText = '🚀 My Uni-Hub';
+}
 
 function render(cat) {
     const container = document.getElementById('list-container');
@@ -23,7 +38,6 @@ function render(cat) {
     sitesData[cat].forEach(site => {
         const li = document.createElement('li');
         li.className = 'item';
-        // img 태그 대신 span 태그로 이모지를 넣습니다.
         li.innerHTML = `
             <a href="${site.url}" target="_blank">
                 <span class="emoji-icon">${site.icon}</span>
@@ -33,3 +47,23 @@ function render(cat) {
         container.appendChild(li);
     });
 }
+
+function applyTheme(theme) {
+    const isDark = theme === 'system' ? window.matchMedia('(prefers-color-scheme: dark)').matches : theme === 'dark';
+    document.documentElement.setAttribute('data-theme', isDark ? 'dark' : 'light');
+}
+
+function toggleTheme() {
+    const modes = ['system', 'light', 'dark'];
+    let current = localStorage.getItem('theme') || 'system';
+    let next = modes[(modes.indexOf(current) + 1) % 3];
+    localStorage.setItem('theme', next);
+    document.querySelector('.theme-toggle').innerText = next === 'system' ? '🖥️ OS' : next === 'light' ? '☀️ Light' : '🌙 Dark';
+    applyTheme(next);
+}
+
+window.onload = () => {
+    applyTheme(localStorage.getItem('theme') || 'system');
+    const lastCat = localStorage.getItem('lastCategory');
+    if (lastCat) openCategory(lastCat);
+};
