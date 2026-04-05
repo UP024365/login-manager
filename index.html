@@ -18,13 +18,16 @@
 </div>
 
 <div id="home-screen" class="main-menu">
+    <div class="search-container">
+        <form action="https://www.google.com/search" method="GET" target="_blank">
+            <input type="text" name="q" placeholder="Google 검색..." class="search-input">
+            <button type="submit" class="search-btn">🔍</button>
+        </form>
+    </div>
+    
     <div class="menu-card study" onclick="openCategory('study')">
         <span class="menu-icon">📚</span>
         <h3>Study</h3>
-    </div>
-    <div class="menu-card login" onclick="openCategory('login')">
-        <span class="menu-icon">🔐</span>
-        <h3>Login Manager</h3>
     </div>
 </div>
 
