@@ -1,6 +1,6 @@
 {
-  "name": "My Uni-Hub",
-  "short_name": "UniHub",
+  "name": "Node",
+  "short_name": "Node",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#f8f9fa",
